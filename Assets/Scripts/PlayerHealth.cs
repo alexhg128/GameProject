@@ -19,6 +19,8 @@ public class PlayerHealth : MonoBehaviour
     public AudioClip hurtAudio;
     public AudioClip pickItem;
 
+    public LevelManager levelManager;
+
     public int CurrentHealth {
         get { return currentHealth; }
         set {
@@ -33,6 +35,13 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public Slider HealthSlider {
+        get 
+        {
+            return healthSlider;
+        }
+    }
+
     void Awake()
     {
         Assert.IsNotNull(healthSlider);
@@ -44,11 +53,13 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = startingHealth;
         characterMovement = GetComponent<CharacterMovement>();
         audio = GetComponent<AudioSource>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void Update()
     {
         timer += Time.deltaTime;
+        PlayerKill();
     }
 
     void OnTriggerEnter(Collider other)
@@ -101,5 +112,14 @@ public class PlayerHealth : MonoBehaviour
     {
         CurrentHealth = 0;
         healthSlider.value = currentHealth;
+    }
+
+    public void PlayerKill()
+    {
+        if(currentHealth <= 0)
+        {
+            characterMovement.enabled = false;
+            levelManager.RespawnPlayer();
+        }
     }
 }
