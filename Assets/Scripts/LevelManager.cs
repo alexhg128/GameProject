@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
     private PlayerHealth playerHealth;
     private CharacterMovement characterMovement;
     public Animator anim;
+    private LifeManager lifeSystem;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour
         playerHealth = player.GetComponent<PlayerHealth>();
         characterMovement = player.GetComponent<CharacterMovement>();
         anim = player.GetComponent<Animator>();
+        lifeSystem = FindObjectOfType<LifeManager>();
     }
 
     void Update()
@@ -32,7 +34,7 @@ public class LevelManager : MonoBehaviour
         timer += Time.deltaTime;
         if(timer >= waitTime)
         {
-            print("Player respawn");
+            lifeSystem.TakeLife();
             player.transform.position = currentCheckpoint.transform.position;
             playerHealth.CurrentHealth = 100;
             timer = 0f;

@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
     public AudioClip pickItem;
 
     public LevelManager levelManager;
+    public bool isDead;
 
     public int CurrentHealth {
         get { return currentHealth; }
@@ -54,6 +55,7 @@ public class PlayerHealth : MonoBehaviour
         characterMovement = GetComponent<CharacterMovement>();
         audio = GetComponent<AudioSource>();
         levelManager = FindObjectOfType<LevelManager>();
+        isDead = false;
     }
 
     void Update()
