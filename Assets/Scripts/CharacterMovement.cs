@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -41,16 +42,16 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        moveDirection = Input.GetAxis("Horizontal");
+        moveDirection = CrossPlatformInputManager.GetAxis("Horizontal");
 
-        if(grounded && Input.GetButton("Jump"))
+        if(grounded && CrossPlatformInputManager.GetButton("Jump"))
         {
             animator.SetTrigger("isJumping");
             rigidbody.AddForce(new Vector2(0, jumpSpeed));
             audio.PlayOneShot(jump);
         }
 
-        if(Input.GetButtonDown("Fire1"))
+        if(CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
             Attack();
         }
